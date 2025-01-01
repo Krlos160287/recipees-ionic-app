@@ -35,3 +35,37 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+.ion-page {
+  background: url('./assets/Fondo.jpg')  center center fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.main {
+  --background: transparent;
+}
+
+.container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+}
+
+.register-login-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  align-self: center;
+}
+
+.div-buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+  margin-top: 1rem;
+}

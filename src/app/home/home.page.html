@@ -1,20 +1,70 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+<div class="ion-page">
+  <ion-content class="main">
+    @if (!register && !login) {
+      <div class="container">
+        <ion-card class="register-login-card">
+          <ion-card-header>
+            <ion-card-title>¡Bienvenido a la app de recetas!</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p>Si eres nuevo, regístrate para poder disfrutar de todas las funcionalidades de la app.</p>
+            <p>Si ya tienes cuenta, inicia sesión para poder disfrutar de todas las funcionalidades de la app.</p>
+            <div class="div-buttons">
+              <ion-button color="warning" type="submit" (click)="clickRegister()">Registrar</ion-button>
+              <ion-button color="warning" type="submit" (click)="clickLogin()">Entrar</ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    }
+    @if (register || login) {
+      <div class="container">
+          <ion-card class="register-login-card">
+            <ion-card-header>
+              <ion-card-title>{{ register ? 'Crear usuario' : 'Login' }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <form [formGroup]="formRegister" class="formulario" (ngSubmit)=" register ? saveUser(): getUser()">
+                @if (register) {
+                <ion-item>
+                  <ion-input
+                  label="Introduzca su alias"
+                  labelPlacement="floating"
+                  formControlName="nickname"
+                  type="text"
+                  placeholder="Nickname"
+                  >
+                  </ion-input>
+                </ion-item>
+                }
+                <ion-item>
+                  <ion-input
+                  label="Introduzca su email"
+                  labelPlacement="floating"
+                  formControlName="email"
+                  type="email"
+                  placeholder="Email"
+                  >
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-input
+                  label="Introduzca su contraseña"
+                  labelPlacement="floating"
+                  formControlName="password"
+                  type="password" 
+                  placeholder="Contraseña"
+                  >
+                  </ion-input>
+                </ion-item>
+                <div class="div-buttons">
+                  <ion-button color="warning" type="submit">Confirmar</ion-button>
+                  <ion-button color="warning" type="button" (click)="getBack()">Volver</ion-button>
+                </div>
+              </form>
+            </ion-card-content>
+          </ion-card>
+      </div>
+    }
+  </ion-content>
+</div>
