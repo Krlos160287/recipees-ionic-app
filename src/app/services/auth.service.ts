@@ -12,7 +12,7 @@ export class AuthService {
   endpoint = environment.api.url;
   private readonly localStorageKey = 'access_token';
 
-  constructor(private readonly http: HttpClient, private readonly router: Router) {}
+  constructor(private readonly http: HttpClient, public readonly router: Router) {}
 
   login(credentials: { email: string; password: string }): Observable<{ token: any }> {
 
