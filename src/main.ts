@@ -8,6 +8,8 @@ import { UsersService } from './app/services/users.service';
 import { AuthService } from './app/services/auth.service';
 import { provideHttpClient } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
+import { authInterceptor, errorHandlerInterceptor } from './app/interceptors/interceptors';
+import { ErrorService } from './app/services/error.service';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -18,5 +20,8 @@ bootstrapApplication(AppComponent, {
     provideHttpClient(),
     UsersService,
     AuthService,
+    authInterceptor,
+    errorHandlerInterceptor, 
+    ErrorService,
   ],
 });
