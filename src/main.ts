@@ -10,6 +10,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { importProvidersFrom } from '@angular/core';
 import { authInterceptor, errorHandlerInterceptor } from './app/interceptors/interceptors';
 import { ErrorService } from './app/services/error.service';
+import { RecipeesService } from './app/services/recipees.service';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -23,5 +24,6 @@ bootstrapApplication(AppComponent, {
     authInterceptor,
     errorHandlerInterceptor, 
     ErrorService,
+    RecipeesService
   ],
 });

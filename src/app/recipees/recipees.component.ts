@@ -1,18 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { take } from 'rxjs';
+import {IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonCard, IonCardHeader, IonCardTitle, 
+  IonCardContent, IonIcon} 
+from '@ionic/angular/standalone';
 
-import { RecetaModel } from './recipee.model';
+import { RecetaModel } from '../models/recipee.model';
 import { AuthService } from '../services/auth.service';
+import { Observable, of, take } from 'rxjs';
+import { RecipeesService } from '../services/recipees.service';
+import { AsyncPipe } from '@angular/common';
+import { addIcons } from 'ionicons';
+import {pencilOutline, trashOutline, documentAttachOutline} from 'ionicons/icons';
 
 @Component({
     selector: 'app-recipees',
     templateUrl: './recipees.component.html',
     styleUrls: ['./recipees.component.scss'],
     standalone: true,
-    imports: []
+    imports: [IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonCard, IonCardHeader,
+       IonCardTitle, IonCardContent, AsyncPipe, IonIcon]
 })
-export class RecipeesComponent {
+export class RecipeesComponent implements OnInit {
 
   display: boolean = false;
 
@@ -22,14 +30,19 @@ export class RecipeesComponent {
 
   selectedRecipee!: RecetaModel;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    // private recipeesService: RecipeesService
-  ) {}
+  //SERVICES
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  private readonly recipeesService = inject(RecipeesService);
+
+  recipees$: Observable<RecetaModel[] | null> = new Observable<RecetaModel[] | null>();
+
+  constructor() {
+    addIcons({pencilOutline, trashOutline, documentAttachOutline});
+  }
 
   ngOnInit(): void {
-    // this.getRecipeesByUserName();
+    this.recipees$ = this.getRecipeesByUserName();
   }
 
   logout() {
@@ -41,14 +54,10 @@ export class RecipeesComponent {
     this.display = true;
   }
 
-  // getRecipeesByUserName() {
-  //   this.recipeesService.getRecipeesByUser(localStorage.getItem('userMail')!).pipe(take(1)).subscribe({
-  //     next: (resp:any) => {
-  //       this.recipees = resp;
-  //     },
-  //     error: console.error
-  //   })
-  // }
+  private getRecipeesByUserName(): Observable<any> {
+    const userMail = localStorage.getItem('userMail')!;
+    return this.recipeesService.getRecipeesByUser(userMail);
+  }
   
   // closeDialog() {
   //   this.display = false;
@@ -61,15 +70,15 @@ export class RecipeesComponent {
     this.displayEdit = true;
   }
   
-  // deleteRecipee(recipee: RecetaModel) {
-  //   this.recipeesService.deleteRecipee(recipee).pipe(take(1))
-  //   .subscribe({
-  //     next: () => {
-  //       this.getRecipeesByUserName();
-  //     },
-  //     error: console.error
-  //   });
-  // }
+  deleteRecipee(recipee: RecetaModel) {
+    this.recipeesService.deleteRecipee(recipee).pipe(take(1))
+    .subscribe({
+      next: (updatedRecipees) => {
+        this.recipees$ = of(updatedRecipees);
+      },
+      error: console.error
+    });
+  }
 
   // getRecipeePDF(recipee: RecetaModel) {
   //   this.recipeesService.getRecipeePDF(recipee).pipe(take(1))

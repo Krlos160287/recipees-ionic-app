@@ -1,30 +1,39 @@
-<div class="div-buttons">
-    <button pButton class="primary btn-propio" type="submit" icon="pi pi-pencil"  (click)="showModal()">Nueva Receta</button>
-    <button pButton class="primary btn-propio" type="submit" icon="pi pi-sign-out"  (click)="logout()">Salir</button>
-</div>
+<ion-header>
+    <ion-toolbar color="warning">
+        <ion-title>Recetas</ion-title>
+        <ion-buttons slot="end">
+            <ion-button color="dark" type="submit" (click)="showModal()">Nueva Receta</ion-button>
+            <ion-button color="dark" type="submit" (click)="logout()">Salir</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 
-<!-- <p-table [value]="recipees" [tableStyle]="{ 'min-width': '50rem' }">
-    <ng-template pTemplate="header">
-        <tr>
-            <th id="nombre">Nombre receta</th>
-            <th id="acciones">Acciones</th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-recipee>
-        <tr>
-            <td>{{ recipee.nombre }}</td>
-            <td>
-                <div class="div-buttons-table">
-                    <button pButton class="primary btn-propio2" type="submit" icon="pi pi-pencil"  (click)="editRecipee(recipee)">Editar</button>
-                    <button pButton class="primary btn-propio2" type="submit" icon="pi pi-trash"  (click)="deleteRecipee(recipee)">Eliminar</button>
-                    <button pButton class="primary btn-propio2" type="submit" icon="pi pi-file-pdf"  (click)="getRecipeePDF(recipee)">Exportar PDF</button>
-                </div>
-            </td>
-        </tr>
-    </ng-template>
-</p-table>
+<ion-content class="main">
+    @if (recipees$ | async; as recipees) {
+        @for (recipee of recipees; track recipee.id) {
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>{{ recipee.nombre }}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-button color="dark" type="submit">
+                        <ion-icon name="pencil"></ion-icon>
+                    </ion-button>
+                    <ion-button color="dark" type="submit" (click)="deleteRecipee(recipee)">
+                        <ion-icon name="trash"></ion-icon>
+                    </ion-button>
+                    <ion-button color="dark" type="submit">
+                        <ion-icon name="document-attach-outline"></ion-icon>
+                    </ion-button>
+                </ion-card-content>
+            </ion-card>
+        }
+    } @else {
+        <p>NO HAY RECETAS</p>
+    }
+</ion-content>
 
-<p-dialog
+<!-- <p-dialog
     header="Nueva receta"
     [(visible)]="display"
     [blockScroll]="false"
