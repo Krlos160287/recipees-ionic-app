@@ -1,84 +1,21 @@
-<!-- <div>
-
-
-  <div class="card">
-    <p-steps [model]="items" [readonly]="true" [activeIndex]="activeIndex"></p-steps>
-  </div>
-
-  @if (activeIndex === 0) {
-    <div class="drop-divs">
-      @for ( categoria of categories; track  categoria) {
-        <div>
-          <h5>{{ categoria.categoria }}:</h5>
-          <p-multiSelect
-            [options]="getIngredientesByCategoria(categoria)"
-            placeholder="Selecciona un ingrediente"
-            [filter]="false"
-            (onChange)="selectsOptions($event, categoria.categoria)"
-            >
-          </p-multiSelect>
-        </div>
+<div class="modal-content">
+  <ion-header>
+    <ion-toolbar color="warning">
+      <ion-title>Nueva receta</ion-title>
+    </ion-toolbar>
+  </ion-header>
+    <div class="photo-container">
+      @if (imageBase64) {
+        <img [src]="imageBase64" alt="Captured Photo" />
       }
     </div>
     <div class="div-buttons">
-      <button pButton class="primary btn-propio" type="submit" (click)="nextStep()">Siguiente</button>
-      <button pButton class="primary btn-propio" type="button" (click)="closeModal()">Cerrar</button>
+      @if (imageBase64) {
+        <ion-button color="warning" type="submit" (click)="uploadPhoto()">Enviar archivo</ion-button>
+        <ion-button color="warning" type="submit" (click)="deletePhoto()">Eliminar foto</ion-button>
+      } @else {
+        <ion-button color="warning" type="submit" (click)="takePhoto()">Realizar foto</ion-button>
+      }
+      <ion-button color="warning" type="button" (click)="closeModal()">Cerrar</ion-button>
     </div>
-  }
-  @if (activeIndex === 1) {
-    <div class="table-div">
-      <p-table
-        #TablaIngredientes
-        class="list-table"
-        [value]="productos">
-        <ng-template pTemplate="header">
-          <tr>
-            <th id="producto">Producto</th>
-            <th id="cantidad">Cantidad</th>
-            <th id="medida">Unidad medida</th>
-            @if (edit) {
-              <th id="acciones">Acciones</th>
-            }
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-producto>
-          <tr>
-            <td>{{ producto.nombre }}</td>
-            <td>
-              <input type="number" class="input-propio" [(ngModel)]="producto.cantidad">
-            </td>
-            <td>
-              <p-dropdown
-                class="uds-select"
-                [options]="udsMedida"
-                [(ngModel)]="producto.unidadMedida"
-                >
-              </p-dropdown>
-            </td>
-            @if (edit) {
-              <td>
-                <button pButton class="primary btn-propio" type="submit" icon="pi pi-trash" (click)="quitIngredient(producto)">Eliminar</button>
-              </td>
-            }
-          </tr>
-        </ng-template>
-      </p-table>
-    </div>
-    <div class="div-buttons">
-      <button pButton class="primary btn-propio" type="submit" (click)="previousStep()">Anterior</button>
-      <button pButton class="primary btn-propio" type="submit" (click)="nextStep()">Siguiente</button>
-      <button pButton class="primary btn-propio" type="button" (click)="closeModal()">Cerrar</button>
-    </div>
-  }
-  @if (activeIndex === 2) {
-    <div class="drop-divs">
-      <input class="input-propio" id="recetaNombre" name="nombreReceta" [(ngModel)]="recipee.nombre" type="text" placeholder="Nombre receta" required="true" />
-      <textarea cols="100" pInputTextarea [(ngModel)]="recipee.steps" [autoResize]="true"></textarea>
-    </div>
-    <div class="div-buttons">
-      <button pButton class="primary btn-propio" type="submit" (click)="previousStep()">Anterior</button>
-      <button pButton class="primary btn-propio" type="submit" (click)="confirm()">Confirmar</button>
-      <button pButton class="primary btn-propio" type="button" (click)="closeModal()">Cerrar</button>
-    </div>
-  }
-</div> -->
+</div>

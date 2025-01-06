@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonCard, IonCardHeader, IonCardTitle, 
-  IonCardContent, IonIcon} 
+  IonCardContent, IonIcon, IonModal} 
 from '@ionic/angular/standalone';
 
 import { RecetaModel } from '../models/recipee.model';
@@ -11,6 +11,7 @@ import { RecipeesService } from '../services/recipees.service';
 import { AsyncPipe } from '@angular/common';
 import { addIcons } from 'ionicons';
 import {pencilOutline, trashOutline, documentAttachOutline} from 'ionicons/icons';
+import { RecipeeModalComponent } from './components/recipee-modal/recipee-modal.component';
 
 @Component({
     selector: 'app-recipees',
@@ -18,7 +19,7 @@ import {pencilOutline, trashOutline, documentAttachOutline} from 'ionicons/icons
     styleUrls: ['./recipees.component.scss'],
     standalone: true,
     imports: [IonButton, IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonCard, IonCardHeader,
-       IonCardTitle, IonCardContent, AsyncPipe, IonIcon]
+       IonCardTitle, IonCardContent, AsyncPipe, IonIcon, IonModal, RecipeeModalComponent]
 })
 export class RecipeesComponent implements OnInit {
 
@@ -80,12 +81,17 @@ export class RecipeesComponent implements OnInit {
     });
   }
 
-  // getRecipeePDF(recipee: RecetaModel) {
-  //   this.recipeesService.getRecipeePDF(recipee).pipe(take(1))
-  //   .subscribe({
-  //     next: console.log,
-  //     error: console.error
-  //   });
-  // }
+  getRecipeePDF(recipee: RecetaModel) {
+    this.recipeesService.getRecipeePDF(recipee).pipe(take(1))
+    .subscribe({
+      next: console.log,
+      error: console.error
+    });
+  }
+
+  closeDialog() {
+    this.display = false;
+  }
+  
 }
 

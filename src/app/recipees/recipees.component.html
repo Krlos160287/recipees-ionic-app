@@ -22,7 +22,7 @@
                     <ion-button color="dark" type="submit" (click)="deleteRecipee(recipee)">
                         <ion-icon name="trash"></ion-icon>
                     </ion-button>
-                    <ion-button color="dark" type="submit">
+                    <ion-button color="dark" type="submit" (click)="getRecipeePDF(recipee)">
                         <ion-icon name="document-attach-outline"></ion-icon>
                     </ion-button>
                 </ion-card-content>
@@ -33,29 +33,8 @@
     }
 </ion-content>
 
-<!-- <p-dialog
-    header="Nueva receta"
-    [(visible)]="display"
-    [blockScroll]="false"
-    [style]="{ height: '800px', width: '1200px' }"
-    [modal]="true"
-    [closable]="false"
->
-<app-recipee-modal (closeDialogEvent)="closeDialog()"></app-recipee-modal>
-</p-dialog>
-
-<p-dialog
-    header="Editar receta"
-    [(visible)]="displayEdit"
-    [blockScroll]="false"
-    [style]="{ height: '800px', width: '1200px' }"
-    [modal]="true"
-    [closable]="false"
->
-<app-recipee-modal
-[recipeeEdit]="selectedRecipee"
-[edit]="displayEdit"
-(closeDialogEvent)="closeDialog()"
->
-</app-recipee-modal>
-</p-dialog> -->
+<ion-modal [isOpen]="display" [backdropDismiss]="false">
+    <ng-template>
+        <app-recipee-modal (closeDialogEvent)="closeDialog()" style="overflow-y: scroll; background: transparent;"></app-recipee-modal>
+    </ng-template>
+</ion-modal>
